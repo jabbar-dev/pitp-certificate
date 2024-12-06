@@ -66,7 +66,7 @@ const CertificateTemplate = (props) => {
           <img src={ribbon} alt="Ribbon" style={{ width: '530px' }} />
         </div>
         <div className="text">
-          <b>THIS CERTIFICATE IS PROUDLY PRESENTED TO</b>
+          <b>THIS CERTIFICATE IS PRESENTED TO</b>
         </div>
         <div className="StudentName">{name}</div>
         <div className="line">___________________</div>
