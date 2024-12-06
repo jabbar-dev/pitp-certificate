@@ -30,7 +30,7 @@ function App() {
           type="text"
           value={certificateNumber}
           onChange={handleChange}
-          placeholder="Enter Your CNIC Number Without Dashes"
+          placeholder="Enter Your Student / Certificate ID"
           className="form-control me-2"
         />
         
