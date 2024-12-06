@@ -1,0 +1,129 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Regular.ttf') format('truetype'); /* Adjust the path to your font file */
+  /* Add additional font formats (e.g., woff, woff2) as needed */
+}
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/Montserrat-Bold.ttf') format('truetype'); /* Bold variant */
+  font-weight: bold; /* Specify the font weight */
+}
+
+@font-face {
+  font-family: 'Sitka';
+  src: url('./fonts/Sitka-Heading.ttf') format('truetype'); /* Bold variant */
+  
+}
+
+.btn-group{
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+.certificate {
+    width: 865px; /* Set the width of the certificate */
+    height: 660px; /* Set the height of the certificate */
+    border: 2px solid #bba149; /* Add a border */
+    padding: 40px; /* Add some padding inside the certificate */
+    font-family: Arial, sans-serif; /* Set the font family */
+    background-repeat: no-repeat;
+    background-size: contain;
+    align-self: center;
+    border-radius: 10px;
+    position: relative;
+  }
+
+  .downloadbtn {
+    padding-top: 60px;
+  }
+  .verifyNote {
+
+    font-family: Montserrat;
+    font-size: 10px;
+    text-align: left;
+    padding-left: 10px;
+    color:#244254;
+    margin-top:-40px;
+  }
+  
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Ensure the image falls behind other content */
+  }
+  
+  .logos {
+    width: 400px; /* Set the width of the certificate */
+    height: 200px; /* Set the height of the certificate */
+    
+    background-size: contain;
+    background-repeat: no-repeat;
+   
+    margin-left: 20px;
+    margin-top:20px;
+  }
+  
+  .text{
+    margin-left: 20px;
+    margin-top: -30px;
+    font-family: Montserrat;
+  }
+  .StudentName {
+    margin-left: 20px;
+    padding-top: 20px;
+    font-size: 40px;
+    font-family: Sitka;
+    color:#244254
+  }
+
+  .line{
+    margin-left: 20px;
+    color:#ddb359;
+    margin-top: -40px;
+    font-size: 40px;
+  }
+
+  .belowText{
+    margin-left: 20px;
+    margin-top: 10px;
+    font-size: 12px;
+    font-family: Montserrat;
+    line-height: 19px;
+    text-transform: uppercase;
+  }
+
+  .qr-container {
+    background-color: white; /* White background for QR code */
+    padding: 5px; /* Add padding for spacing */
+    border-radius: 5px; /* Rounded corners */
+    display: inline-block; /* Ensures proper alignment */
+    margin-bottom: 10px; /* Space below QR code */
+  }
+  .verifyNote {
+    font-family: Montserrat;
+    font-size: 10px;
+    text-align: left;
+    padding-left: 10px;
+    color: #244254;
+    margin-top: -100px;
+  }
+
+  .signs{
+    margin-top: -20px;
+    width: 400px; /* Set the width of the certificate */
+    height: 200px; /* Set the height of the certificate */
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .certificate h1 {
+    text-align: center; /* Center align the heading */
+  }
+  
+  .certificate p {
+    text-align: justify; /* Justify align the paragraphs */
+  }
+  
