@@ -30,7 +30,7 @@ function App() {
           type="text"
           value={certificateNumber}
           onChange={handleChange}
-          placeholder="Enter Your Student / Certificate ID"
+          placeholder="Enter Your Student / Certificate ID Jabbar"
           className="form-control me-2"
         />
         
