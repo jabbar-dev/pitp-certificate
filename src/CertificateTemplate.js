@@ -73,10 +73,10 @@ const CertificateTemplate = (props) => {
         <div className="belowText">
           <b>
             FOR SUCCESSFULLY COMPLETING TWO MONTHS HANDS-ON TRAINING OF <br />
-            {course}
+           <span className='course'>{course}  </span> 
             <br />
-            UNDER THE PROJECT OF <br />
-            <b>PEOPLES INFORMATION TECHNOLOGY PROGRAM (PITP)</b>
+            UNDER THE INITIATIVE OF GOVERNMENT OF SINDH <br />
+            <span className='coursename'>PEOPLES INFORMATION TECHNOLOGY PROGRAM (PITP)</span>
             <br />
             AT {center}
           </b>

@@ -23,7 +23,7 @@
 .certificate {
     width: 865px; /* Set the width of the certificate */
     height: 660px; /* Set the height of the certificate */
-    border: 2px solid #bba149; /* Add a border */
+    border: 2px solid #156f9d; /* Add a border */
     padding: 40px; /* Add some padding inside the certificate */
     font-family: Arial, sans-serif; /* Set the font family */
     background-repeat: no-repeat;
@@ -76,7 +76,27 @@
     padding-top: 20px;
     font-size: 40px;
     font-family: Sitka;
-    color:#244254
+    color:#156f9d
+  }
+
+  .course {
+
+    font-size: 15px;
+    font-weight: 200px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: #1778aa;
+
+
+  }
+
+  .coursename{
+
+    font-size: 16px;
+    font-weight: 200px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    color: #1778aa;
+
+
   }
 
   .line{
@@ -90,7 +110,7 @@
     margin-left: 20px;
     margin-top: 10px;
     font-size: 12px;
-    font-family: Montserrat;
+    font-family: Arial, Helvetica, sans-serif;
     line-height: 19px;
     text-transform: uppercase;
   }
