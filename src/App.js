@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Certificate from './Certificate';
+import DownloadCertificates from './DownloadCertificates';
 import strip from './image/strip certificate.png'
 
 
@@ -48,6 +49,7 @@ function Main() {
       <Routes>
         <Route path="/*" element={<App />} />
         <Route path="certificate/:hi" element={<Certificate />} />
+        <Route path="/download" element={<DownloadCertificates />} />
       </Routes>
     </BrowserRouter>
   );

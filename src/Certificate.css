@@ -20,6 +20,47 @@
   margin-bottom: 40px;
 }
 
+.download-container {
+  text-align: center;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dropdown {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+}
+
+.download-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #218838;
+}
+
 .certificate {
     width: 865px; /* Set the width of the certificate */
     height: 660px; /* Set the height of the certificate */
@@ -117,7 +158,7 @@
 
   .qr-container {
     background-color: white; /* White background for QR code */
-    padding: 5px; /* Add padding for spacing */
+    padding: 0px; /* Add padding for spacing */
     border-radius: 5px; /* Rounded corners */
     display: inline-block; /* Ensures proper alignment */
     margin-bottom: 10px; /* Space below QR code */
@@ -128,7 +169,7 @@
     text-align: left;
     padding-left: 10px;
     color: #244254;
-    margin-top: -100px;
+    margin-top: -113px;
   }
 
   .signs{
