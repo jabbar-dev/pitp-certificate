@@ -175,7 +175,20 @@
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+  .progress-bar-container {
+    width: 100%;
+    background: #f3f3f3;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
   
+  .progress-bar {
+    height: 10px;
+    border-radius: 5px;
+    background: #36d7b7;
+    transition: width 0.3s ease;
+  }
   .modal-content p {
     margin-top: 20px;
     font-size: 16px;
