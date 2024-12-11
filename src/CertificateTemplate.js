@@ -43,7 +43,7 @@ const CertificateTemplate = React.forwardRef((props, ref) => {
       const imgWidth = pdf.internal.pageSize.getWidth();
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save(`${name}_certificate_pitp.pdf`);
+      pdf.save(`${name+"_"+id}_certificate_pitp.pdf`);
     });
   };
 

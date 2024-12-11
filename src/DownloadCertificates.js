@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { createRoot } from "react-dom/client"; // Import createRoot
+import { createRoot } from "react-dom/client";
 import { CertificateData } from "./CertificateData";
 import CertificateTemplate from "./CertificateTemplate";
 import html2canvas from "html2canvas";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
+import { BounceLoader } from "react-spinners"; // Import spinner
 
 export default function DownloadCertificates() {
   const [selectedCenter, setSelectedCenter] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // State for modal
 
   const centers = [...new Set(CertificateData.map((cert) => cert.center))];
   const courses = [...new Set(CertificateData.map((cert) => cert.course))];
@@ -24,6 +26,8 @@ export default function DownloadCertificates() {
       alert("No certificates found for the selected criteria!");
       return;
     }
+
+    setIsLoading(true); // Show modal before generating certificates
 
     const zip = new JSZip();
 
@@ -53,7 +57,7 @@ export default function DownloadCertificates() {
       const imgData = canvas.toDataURL("image/png");
 
       // Add the image to the ZIP file
-      zip.file(`${cert.name}_certificate.png`, imgData.split(",")[1], {
+      zip.file(`${cert.name+"_"+cert.certificate_id}_certificate.png`, imgData.split(",")[1], {
         base64: true,
       });
 
@@ -63,7 +67,8 @@ export default function DownloadCertificates() {
 
     // Generate the ZIP and trigger the download
     zip.generateAsync({ type: "blob" }).then((content) => {
-      saveAs(content, "certificates.zip");
+      saveAs(content ,`${selectedCenter+"_"+selectedCourse+ "_certificates.zip"}`);
+      setIsLoading(false); // Hide modal after downloading
     });
   };
 
@@ -100,6 +105,18 @@ export default function DownloadCertificates() {
       <button className="download-btn" onClick={handleDownloadZip}>
         Download All Certificates as ZIP
       </button>
+
+      {isLoading && (
+        <div className="modal">
+            <center>
+          <div className="modal-content">
+            <BounceLoader color="#36d7b7" loading={isLoading} size={60} />
+            <p>Generating Certificates, please wait...</p>
+            
+          </div>
+          </center>
+        </div>
+      )}
     </div>
   );
 }
