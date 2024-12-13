@@ -2,16 +2,17 @@ import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { CertificateData } from "./CertificateData";
 import CertificateTemplate from "./CertificateTemplate";
-import html2canvas from "html2canvas";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { BounceLoader } from "react-spinners";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 export default function DownloadCertificates() {
   const [selectedCenter, setSelectedCenter] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [progress, setProgress] = useState(0); // Track progress
+  const [progress, setProgress] = useState(0);
 
   const centers = [...new Set(CertificateData.map((cert) => cert.center))];
   const courses = [...new Set(CertificateData.map((cert) => cert.course))];
@@ -29,7 +30,7 @@ export default function DownloadCertificates() {
     }
 
     setIsLoading(true);
-    setProgress(0); // Reset progress
+    setProgress(0);
 
     const zip = new JSZip();
 
@@ -41,7 +42,7 @@ export default function DownloadCertificates() {
       certificateContainer.style.left = "-10000px";
       document.body.appendChild(certificateContainer);
 
-      // Render the certificate component using createRoot
+      // Render the certificate component
       const root = createRoot(certificateContainer);
       root.render(
         <CertificateTemplate
@@ -52,26 +53,39 @@ export default function DownloadCertificates() {
         />
       );
 
-      // Allow a slight delay to ensure the QR code is rendered
+      // Allow rendering time
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // Capture the rendered certificate
-      const canvas = await html2canvas(certificateContainer, { useCORS: true });
-      const imgData = canvas.toDataURL("image/png");
-
-      // Add the image to the ZIP file
-      zip.file(`${cert.name}_${cert.certificate_id}_certificate.png`, imgData.split(",")[1], {
-        base64: true,
+      // Generate PDF
+      const canvas = await html2canvas(certificateContainer, {
+        scale: 3,
+        scrollX: 0,
+        scrollY: 0,
+        width: certificateContainer.offsetWidth,
+        height: certificateContainer.offsetHeight,
+        useCORS: true,
       });
 
-      // Clean up the DOM
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: [canvas.width, canvas.height],
+      });
+      const imgData = canvas.toDataURL("image/png");
+      pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
+
+      // Convert the PDF to blob and add to the ZIP file
+      const pdfBlob = pdf.output("blob");
+      zip.file(`${cert.name}_${cert.certificate_id}_certificate.pdf`, pdfBlob);
+
+      // Clean up
       document.body.removeChild(certificateContainer);
 
       // Update progress
       setProgress(((i + 1) / filteredCertificates.length) * 100);
     }
 
-    // Generate the ZIP and trigger the download
+    // Generate and download ZIP
     zip.generateAsync({ type: "blob" }).then((content) => {
       saveAs(content, `${selectedCenter}_${selectedCourse}_certificates.zip`);
       setIsLoading(false);
