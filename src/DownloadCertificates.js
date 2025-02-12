@@ -14,7 +14,8 @@ export default function DownloadCertificates() {
   const [selectedCourse, setSelectedCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-const batched = [...new Set(CertificateData.map((cert) => cert.batch))];
+  
+const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
   const centers = [...new Set(CertificateData.map((cert) => cert.center))];
   const courses = [...new Set(CertificateData.map((cert) => cert.course))];
 
