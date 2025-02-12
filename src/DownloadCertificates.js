@@ -9,17 +9,19 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 export default function DownloadCertificates() {
+  const [selectedBatch, setSelectedBatch] = useState("");
   const [selectedCenter, setSelectedCenter] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-
+const batched = [...new Set(CertificateData.map((cert) => cert.batch))];
   const centers = [...new Set(CertificateData.map((cert) => cert.center))];
   const courses = [...new Set(CertificateData.map((cert) => cert.course))];
 
   const handleDownloadZip = async () => {
     const filteredCertificates = CertificateData.filter(
       (cert) =>
+      (selectedBatch === "" || cert.batch === selectedBatch) &&
         (selectedCenter === "" || cert.center === selectedCenter) &&
         (selectedCourse === "" || cert.course === selectedCourse)
     );
