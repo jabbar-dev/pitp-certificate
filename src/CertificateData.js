@@ -4856,7 +4856,8 @@ export const CertificateData = [
       "center": "Sukkur IBA University",
       "certificate_id": "110133",
       "batch": 1
-    },
+    }
+  ]
 //BATCH 2
   // {
   //   "name": "Abdul Ghaffar",
@@ -13800,4 +13801,3 @@ export const CertificateData = [
   //   "certificate_id": 260840
   // }
 
-]
