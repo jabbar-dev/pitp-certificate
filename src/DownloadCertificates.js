@@ -98,6 +98,20 @@ const batched = [...new Set(CertificateData.map((cert) => cert.batch))];
     <div className="download-container">
       <h2 className="title">Download All Certificates</h2>
       <div className="filters">
+
+      <select
+          value={selectedBatch}
+          onChange={(e) => setSelectedBatch(e.target.value)}
+          className="dropdown"
+        >
+          <option value="">Choose by Batch</option>
+          {batch.map((batch) => (
+            <option key={batch} value={batch}>
+              {batch}
+            </option>
+          ))}
+        </select>
+
         <select
           value={selectedCenter}
           onChange={(e) => setSelectedCenter(e.target.value)}
