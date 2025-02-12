@@ -4650,6 +4650,7 @@ export const CertificateData = [
     "center": "IBA IET Campus Khairpur",
     "certificate_id": 220339
   },
+  //BATCH 2
   {
     "name": "Abdul Ghaffar",
     "course": "Certified Python Developer",
