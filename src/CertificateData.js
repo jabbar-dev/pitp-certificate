@@ -4,6 +4,7 @@ export const CertificateData = [
       "course": "Certified Digital Marketing",
       "center": "AROR University",
       "certificate_id": 120201,
+      "batch" : 1
     }
   ]
   //   {
