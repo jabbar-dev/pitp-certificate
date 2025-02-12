@@ -9,22 +9,24 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 export default function DownloadCertificates() {
-  const [selectedBatch, setSelectedBatch] = useState(0);
+  // Initialize all filters as empty strings for consistency.
+  const [selectedBatch, setSelectedBatch] = useState("");
   const [selectedCenter, setSelectedCenter] = useState("");
   const [selectedCourse, setSelectedCourse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
-const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
+  // Get unique values from CertificateData for each dropdown.
+  const batches = [...new Set(CertificateData.map((cert) => cert.batch))];
   const centers = [...new Set(CertificateData.map((cert) => cert.center))];
   const courses = [...new Set(CertificateData.map((cert) => cert.course))];
 
   const handleDownloadZip = async () => {
-    const filteredCertificates = CertificateData.filter(
-      (cert) =>
-      (selectedBatch === 0 || cert.batch === selectedBatch) &&
-        (selectedCenter === "" || cert.center === selectedCenter) &&
-        (selectedCourse === "" || cert.course === selectedCourse)
+    // Filter certificates based on selected criteria.
+    const filteredCertificates = CertificateData.filter((cert) =>
+      (selectedBatch === "" || cert.batch === parseInt(selectedBatch, 10)) &&
+      (selectedCenter === "" || cert.center === selectedCenter) &&
+      (selectedCourse === "" || cert.course === selectedCourse)
     );
 
     if (filteredCertificates.length === 0) {
@@ -39,13 +41,15 @@ const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
 
     for (let i = 0; i < filteredCertificates.length; i++) {
       const cert = filteredCertificates[i];
+
+      // Create an off-screen container for rendering the certificate.
       const certificateContainer = document.createElement("div");
       certificateContainer.style.position = "absolute";
       certificateContainer.style.top = "-10000px";
       certificateContainer.style.left = "-10000px";
       document.body.appendChild(certificateContainer);
 
-      // Render the certificate component
+      // Render the certificate component into the container.
       const root = createRoot(certificateContainer);
       root.render(
         <CertificateTemplate
@@ -56,19 +60,18 @@ const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
         />
       );
 
-      // Allow rendering time
-      await new Promise((resolve) => setTimeout(resolve, 200));
+      // Wait for the certificate to render.
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      // Generate PDF
+      // Use html2canvas to capture the certificate.
       const canvas = await html2canvas(certificateContainer, {
         scale: 3,
         scrollX: 0,
         scrollY: 0,
-        width: certificateContainer.offsetWidth,
-        height: certificateContainer.offsetHeight,
         useCORS: true,
       });
 
+      // Create a PDF from the captured image.
       const pdf = new jsPDF({
         orientation: "landscape",
         unit: "px",
@@ -77,20 +80,25 @@ const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
       const imgData = canvas.toDataURL("image/png");
       pdf.addImage(imgData, "PNG", 0, 0, canvas.width, canvas.height);
 
-      // Convert the PDF to blob and add to the ZIP file
+      // Convert the PDF to a blob and add it to the ZIP file.
       const pdfBlob = pdf.output("blob");
-      zip.file(`${cert.name}_${cert.certificate_id}_certificate.pdf`, pdfBlob);
+      // Replace spaces in the name with underscores for the file name.
+      const safeName = cert.name.replace(/ /g, "_");
+      zip.file(`${safeName}_${cert.certificate_id}_certificate.pdf`, pdfBlob);
 
-      // Clean up
+      // Remove the off-screen container.
       document.body.removeChild(certificateContainer);
 
-      // Update progress
-      setProgress(((i + 1) / filteredCertificates.length) * 100);
+      // Update progress.
+      setProgress(Math.round(((i + 1) / filteredCertificates.length) * 100));
     }
 
-    // Generate and download ZIP
+    // Generate the ZIP file and trigger the download.
     zip.generateAsync({ type: "blob" }).then((content) => {
-      saveAs(content, `${selectedCenter}_${selectedCourse}_certificates.zip`);
+      // Provide default values in the file name if center or course are not selected.
+      const centerName = selectedCenter || "AllCenters";
+      const courseName = selectedCourse || "AllCourses";
+      saveAs(content, `${centerName}_${courseName}_certificates.zip`);
       setIsLoading(false);
     });
   };
@@ -99,14 +107,13 @@ const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
     <div className="download-container">
       <h2 className="title">Download All Certificates</h2>
       <div className="filters">
-
-      <select
+        <select
           value={selectedBatch}
           onChange={(e) => setSelectedBatch(e.target.value)}
           className="dropdown"
         >
           <option value="">Choose by Batch</option>
-          {batch.map((batch) => (
+          {batches.map((batch) => (
             <option key={batch} value={batch}>
               {batch}
             </option>
@@ -139,6 +146,7 @@ const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
           ))}
         </select>
       </div>
+
       <button className="download-btn" onClick={handleDownloadZip}>
         Download All Certificates as ZIP
       </button>
@@ -149,11 +157,15 @@ const batch = [...new Set(CertificateData.map((cert) => cert.batch))];
             <div className="modal-content">
               <BounceLoader color="#36d7b7" loading={isLoading} size={60} />
               <p>Generating Certificates, please wait...</p>
-              <p>{`Progress: ${Math.round(progress)}%`}</p>
+              <p>{`Progress: ${progress}%`}</p>
               <div className="progress-bar-container">
                 <div
                   className="progress-bar"
-                  style={{ width: `${progress}%`, height: "10px", background: "#36d7b7" }}
+                  style={{
+                    width: `${progress}%`,
+                    height: "10px",
+                    background: "#36d7b7",
+                  }}
                 />
               </div>
             </div>
