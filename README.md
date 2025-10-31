@@ -1,70 +1,194 @@
-# Getting Started with Create React App
+# Exam Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive full-stack web application for university exam management and digital marking, built with MERN stack + Python microservice.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+### Core Functionality
+- **Complete Exam Lifecycle Management** - From creation to result export
+- **Answer Sheet Creator Wizard** ⭐ - Auto-generate standardized answer booklets with QR codes
+- **Student & Subject Management** - Bulk import via CSV, full CRUD operations
+- **QR-Coded Paper Generation** - Unique identification for each student's papers
+- **Digital Marking System** - Browser-based marking with rubrics and annotations
+- **Scan & Auto-Matching** - Upload scanned papers and auto-identify via QR
+- **Results Export** - CSV and annotated PDF generation
 
-### `npm start`
+### User Roles
+- **Admin** - Full system access, exam creation, student management
+- **Marker/Teacher** - Digital marking and rubric management
+- **Viewer/HOD** - Read-only access to marks and reports
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Technology Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Frontend
+- React 18 with React Router
+- Tailwind CSS for styling
+- Axios for API communication
+- Context API for state management
 
-### `npm test`
+### Backend
+- Node.js with Express
+- MongoDB with Mongoose ODM
+- JWT authentication with bcrypt
+- Multer for file uploads
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Python Microservice
+- Flask web server
+- ReportLab for PDF generation
+- qrcode library for QR generation
+- pyzbar for QR decoding
 
-### `npm run build`
+## Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js 16+ and npm
+- Python 3.8+
+- MongoDB 5.0+
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 1. Clone and Install Frontend
+```bash
+npm install
+```
 
-### `npm run eject`
+### 2. Install Backend Dependencies
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Edit .env with your MongoDB URI and JWT secret
+cd ..
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 3. Install Python Service
+```bash
+cd python-service
+pip install -r requirements.txt
+cd ..
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Running the Application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+You need to run three services:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Terminal 1: Frontend (Port 3000)
+```bash
+npm start
+```
 
-## Learn More
+### Terminal 2: Backend API (Port 5000)
+```bash
+cd backend
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Terminal 3: Python Service (Port 5001)
+```bash
+cd python-service
+python app.py
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Quick Start
 
-### Code Splitting
+1. **Start MongoDB** - Ensure MongoDB is running locally or configure remote URI
+2. **Create Admin User** - See Initial Setup section below
+3. **Login** at http://localhost:3000/login
+4. **Use the Answer Sheet Creator Wizard** at Dashboard → Answer Sheet Creator
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Initial Setup
 
-### Analyzing the Bundle Size
+Create an admin user in MongoDB:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```javascript
+use exam-management
 
-### Making a Progressive Web App
+db.users.insertOne({
+  name: "Admin User",
+  email: "admin@example.com",
+  passwordHash: "$2a$10$K8YrVlqYsXvEQ7J8lF8B6.WYjH5R.9bGfMmNfJ8J8lVQfFwY7nY6W",
+  role: "admin",
+  assignedSubjects: [],
+  createdAt: new Date(),
+  updatedAt: new Date()
+})
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**Login:** admin@example.com / admin123
 
-### Advanced Configuration
+## Usage Workflow
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Login as admin
+2. Import/add students
+3. Create subjects and exams
+4. **Use Answer Sheet Creator Wizard** to generate QR-coded booklets
+5. Download PDFs and print
+6. Conduct exam
+7. Upload scanned copies
+8. Mark digitally
+9. Export results
 
-### Deployment
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
+pitp-certificate/
+├── backend/                 # Node.js Express API
+│   ├── models/             # MongoDB models
+│   ├── routes/             # API routes
+│   └── middleware/         # Authentication
+├── python-service/         # PDF generation service
+│   └── app.py              # Flask app
+├── src/                    # React frontend
+│   ├── pages/              # Page components
+│   ├── services/           # API services
+│   └── context/            # Auth context
+└── public/                 # Static assets
+```
 
-### `npm run build` fails to minify
+## Key API Endpoints
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `POST /api/auth/login` - Login
+- `GET /api/students` - List students
+- `POST /api/students/bulk-import` - CSV import
+- `POST /api/exams` - Create exam
+- `POST /api/answer-sheets/generate` - Generate answer sheets
+- `GET /api/results/:examId/csv` - Export results
+
+## CSV Import Format
+
+```csv
+studentId,fullName,program,batch,section
+21CS001,John Doe,BS CS,2021,A
+21CS002,Jane Smith,BS CS,2021,A
+```
+
+## Security
+
+- JWT authentication
+- bcrypt password hashing
+- Role-based access control
+- QR signature verification
+- CORS protection
+
+## Legacy Features
+
+This system also includes the original certificate viewing functionality:
+- View certificates at `/certificate/:id`
+- Download bulk certificates at `/download`
+
+## Troubleshooting
+
+- **MongoDB not connecting**: Check MONGODB_URI in backend/.env
+- **Python service error**: Install dependencies with `pip install -r requirements.txt`
+- **Port conflicts**: Ensure ports 3000, 5000, 5001 are available
+
+## Future Enhancements
+
+- Full scan upload processing
+- Interactive marking canvas
+- Student result portal
+- Analytics dashboard
+- Email notifications
+
+## License
+
+Part of PITP Certificate System
