@@ -31,6 +31,8 @@ const answerSheetRoutes = require('./routes/answerSheets');
 const rubricRoutes = require('./routes/rubrics');
 const markingRoutes = require('./routes/marking');
 const resultsRoutes = require('./routes/results');
+const scanRoutes = require('./routes/scans');
+const teacherRoutes = require('./routes/teachers');
 
 // Mount routes
 app.use('/api/auth', authRoutes);
@@ -41,6 +43,8 @@ app.use('/api/answer-sheets', answerSheetRoutes);
 app.use('/api/rubrics', rubricRoutes);
 app.use('/api/marking', markingRoutes);
 app.use('/api/results', resultsRoutes);
+app.use('/api/scans', scanRoutes);
+app.use('/api/teachers', teacherRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

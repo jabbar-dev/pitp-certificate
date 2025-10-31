@@ -89,4 +89,27 @@ export const resultService = {
   exportCSV: (examId) => api.get(`/results/export/${examId}/csv`, { responseType: 'blob' })
 };
 
+// Scans
+export const scanService = {
+  upload: (examId, file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('examId', examId);
+    return api.post('/scans/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+  },
+  getByExam: (examId) => api.get(`/scans/${examId}`),
+  getStatus: (scanId) => api.get(`/scans/status/${scanId}`)
+};
+
+// Teachers
+export const teacherService = {
+  getAll: () => api.get('/teachers'),
+  getById: (id) => api.get(`/teachers/${id}`),
+  create: (data) => api.post('/teachers', data),
+  update: (id, data) => api.put(`/teachers/${id}`, data),
+  delete: (id) => api.delete(`/teachers/${id}`)
+};
+
 export default api;
